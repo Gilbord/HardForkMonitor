@@ -30,8 +30,9 @@ class Monitor(metaclass=ABCMeta):
         """
         while True:
             median_time = self.get_median_time()
-            logger.info(f'current median time {median_time}')
             if median_time >= self.hard_fork_time_stamp:
                 self.on_hard_fork(median_time)
                 break
+            minutes_left = (self.hard_fork_time_stamp - median_time) // 60
+            logger.info(f'current median time {median_time}; about {minutes_left} +- 10 min minutes left')
             sleep(5)
