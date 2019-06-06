@@ -24,6 +24,9 @@ class Monitor(metaclass=ABCMeta):
         """
         Запускает монитор.
         """
-        while self.get_median_time() < self.hard_fork_time_stamp:
+        while True:
+            median_time = self.get_median_time()
+            if median_time >= self.hard_fork_time_stamp:
+                self.on_hard_fork(median_time)
+                break
             sleep(5)
-        self.on_hard_fork(self.get_median_time())
