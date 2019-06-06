@@ -1,11 +1,8 @@
 import requests
 from requests import HTTPError
 
-from logger import get_logger
 from monitor.base_monitor import Monitor
 from monitor.exceptions import MonitoringException
-
-logger = get_logger(__name__)
 
 
 class RestMonitor(Monitor):
@@ -20,7 +17,6 @@ class RestMonitor(Monitor):
             median_time = int(
                 response.json()['mediantime']
             )
-            logger.info(f'current median time {median_time}')
             return median_time
         except HTTPError as e:
             raise MonitoringException(e)

@@ -2,6 +2,10 @@ from abc import ABCMeta, abstractmethod
 from time import sleep
 from typing import Callable
 
+from logger import get_logger
+
+logger = get_logger(__name__)
+
 
 class Monitor(metaclass=ABCMeta):
     """
@@ -26,6 +30,7 @@ class Monitor(metaclass=ABCMeta):
         """
         while True:
             median_time = self.get_median_time()
+            logger.info(f'current median time {median_time}')
             if median_time >= self.hard_fork_time_stamp:
                 self.on_hard_fork(median_time)
                 break

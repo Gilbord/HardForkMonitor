@@ -4,12 +4,8 @@ import requests
 from requests import HTTPError
 from requests.auth import HTTPBasicAuth
 
-from logger import get_logger
 from monitor.base_monitor import Monitor
 from monitor.exceptions import MonitoringException
-
-
-logger = get_logger(__name__)
 
 
 class RPCJSONMonitor(Monitor):
@@ -36,7 +32,6 @@ class RPCJSONMonitor(Monitor):
             if error is not None:
                 raise MonitoringException(error)
             median_time = int(response_json['result']['mediantime'])
-            logger.info(f'current median time {median_time}')
             return median_time
         except HTTPError as e:
             raise MonitoringException(e)
